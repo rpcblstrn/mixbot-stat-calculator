@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MixBot Stat Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            width: 200px;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>MixBot Stat Calculator</h1>
+    <label for="partsInput">Enter MixBot Parts (comma-separated):</label>
+    <input type="text" id="partsInput" placeholder="e.g. SLUG,HUNTR,GRNT">
+    <button onclick="calculateStats()">Calculate Stats</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateStats() {
+            let parts = {
+                "SLUG": {maxSpeed: 1, acceleration: -1},
+                "HUNTR": {acceleration: 1, durability: -1},
+                "GRNT": {durability: 1, willpower: -1},
+                "WZRD": {willpower: 1, maxSpeed: -1},
+                "LZRD": {maxSpeed: 1, willpower: -1},
+                "FINK": {acceleration: 1, maxSpeed: -1},
+                "KNG": {durability: 1, acceleration: -1},
+                "MNSTR": {willpower: 1, durability: -1}
+            };
+
+            let acceleration = 10;
+            let maxSpeed = 10;
+            let durability = 10;
+            let willpower = 10;
+
+            let selectedParts = document.getElementById('partsInput').value.split(',');
+
+            selectedParts.forEach(part => {
+                if (parts[part]) {
+                    acceleration += parts[part].acceleration || 0;
+                    maxSpeed += parts[part].maxSpeed || 0;
+                    durability += parts[part].durability || 0;
+                    willpower += parts[part].willpower || 0;
+                }
+            });
+
+            document.getElementById('result').innerHTML = `
+                Acceleration: ${acceleration} <br>
+                Max Speed: ${maxSpeed} <br>
+                Durability: ${durability} <br>
+                Willpower: ${willpower}
+            `;
+        }
+    </script>
+</body>
+</html>
